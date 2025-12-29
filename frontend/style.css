@@ -1,0 +1,140 @@
+/* ...existing code... */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  /* Removed background-color from here */
+}
+
+.decoration{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.circle{
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.circle1 { width: 180px; height: 180px; background: #d88ad6; top: -60px; left: 750px; }
+.circle2 { width: 260px; height: 260px; background: #f49eb0; top: -80px; right: -80px; }
+.circle3 { width: 70px; height: 70px; background: #fddede; top: 90px; left: 600px; }
+.circle4 { width: 45px; height: 45px; background: #8051b6; top: 200px; right: 120px; }
+.circle5 { width: 90px; height: 90px; background: #8051b6; bottom: 120px; left: 800px; }
+.circle6 { width: 130px; height: 130px; background: #d88ad6; bottom: 60px; right: 60px; }
+.circle7 { width: 70px; height: 70px; background: #f49eb0; bottom: 30px; left: 1000px; }
+.circle8 { width: 60px; height: 60px; background: #8051b6; top: 350px; right: 200px; }
+
+.introduce{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.name{
+  position: absolute;
+  pointer-events: none;
+  top: 300px;
+  left: 1200px;
+  font-size: 100px;
+}
+
+.phrase{
+  position: absolute;
+  pointer-events: none;
+  top: 420px; 
+  left: 1216px;
+  font-size: 16px;
+}
+
+
+body {
+  display: flex;
+  justify-content: left;
+  padding-left: 50px;
+  align-items: center;
+  height: 100vh;
+  background: rgb(255, 255, 255);
+}
+
+.wrapper{
+  width: 420px;
+  background-color: #ffa6a6;
+  border-radius: 10px;
+  padding: 30px 40px;
+  z-index: 1;
+  position: relative;
+  left: 100px;
+
+}
+
+.wrapper h1 {
+  font-size: 50px;
+}
+
+.wrapper .input-box {
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 16px;
+  color: white;
+  padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder {
+  color: white;
+}
+
+.wrapper .btn{
+  width: 100%;
+  height: 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.wrapper .create-acc{
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
+
+
+}
+
+.create-acc a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.create-acc a:hover{
+  text-decoration: underline;
+}

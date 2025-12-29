@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parking Map</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f1ec;
+    }
+
+    .map-container {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      background-image: url('map.png');
+      background-position: center;
+    }
+
+    
+    .search-bar {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 25px;
+      padding: 6px 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .search-bar input {
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      background: transparent;
+    }
+
+    .search-bar::before {
+      content: "🔍";
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    
+    .bottom-panel {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: #fdfcf9;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 12px 16px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+    }
+
+    
+    .swipe-bar {
+      position: absolute;
+      width: 60px;
+      height: 7px;
+      background-color: #ccc;
+      border-radius: 3px;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    
+    .button-row {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+
+    .circle-button {
+      background-color: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+
+    
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: #f6f3ee;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 12px;
+    }
+
+    .info-card img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .info-details {
+      font-size: 14px;
+    }
+
+    .info-details strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .info-footer {
+      display: flex;
+      flex-direction: column;
+      margin-top: 4px;
+      font-size: 12px;
+      color: #444;
+    }
+
+    .rating {
+      text-align: left;
+      margin-left: 0;
+      padding-left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="map-container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id='search' placeholder="Search parking..." />
+    </div>
+
+    <!-- Bottom Panel -->
+    <div class="bottom-panel">
+      <div id="swipe-bar" class="swipe-bar"></div>
+
+      <!-- Buttons -->
+      <div class="button-row">
+        <button class="circle-button">📍</button>
+        <button class="circle-button">🅿️</button>
+        <button class="circle-button">🔄</button>
+      </div>
+      <div class="info-card" id="card1">
+        <div class="info-details">
+          <strong class="name">Name</strong>
+          <div class="info-footer">
+            <span class="rating">⭐x/5</span><span class="total">ที่จอดทั้งหมด XX ที่</span><span class="spots">เหลือว่าง XX ที่</span>
+          </div>
+          <div class="info-footer">
+            <span class="distance">xxxm</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-card" id="card2">
+        <div class="info-details">
+          <strong class="name">Name</strong>
+          <div class="info-footer">
+            <span class="rating">⭐x/5</span>
+            <span class="total">ที่จอดทั้งหมด XX ที่</span>
+            <span class="spots">เหลือว่าง XX ที่</span>
+          </div>
+          <div class="info-footer">
+            <span class="distance">xxxm</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-card" id="card3">
+        <div class="info-details">
+          <strong class="name">Name</strong>
+          <div class="info-footer">
+            <span class="rating">⭐x/5</span>
+            <span class="total">ที่จอดทั้งหมด XX ที่</span>
+            <span class="spots">เหลือว่าง XX ที่</span>
+          </div>
+          <div class="info-footer">
+            <span class="distance">xxxm</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-card" id="card4">
+        <div class="info-details">
+          <strong class="name">Name</strong>
+          <div class="info-footer">
+            <span class="rating">⭐x/5</span>
+            <span class="total">ที่จอดทั้งหมด XX ที่</span>
+            <span class="spots">เหลือว่าง XX ที่</span>
+          </div>
+          <div class="info-footer">
+            <span class="distance">xxxm</span>
+          </div>
+        </div>
+      </div>
+      <div class="info-card" id="card5">
+        <div class="info-details">
+          <strong class="name">Name</strong>
+          <div class="info-footer">
+            <span class="rating">⭐x/5</span>
+            <span class="total">ที่จอดทั้งหมด XX ที่</span>
+            <span class="spots">เหลือว่าง XX ที่</span>
+          </div>
+          <div class="info-footer">
+            <span class="distance">xxxm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  function getfuncdata(key, itemname) {
+      const card = document.getElementById(key);
+      const val = JSON.parse(localStorage.getItem(itemname));
+      card.querySelector('.name').innerHTML = val.name;
+      card.querySelector('.total').innerHTML = `ที่จอดทั้งหมด ${val.total} ที่`
+      card.querySelector('.spots').innerHTML = `เหลือว่าง ${val.spots} ที่`
+      card.querySelector('.distance').innerHTML = val.distance + 'm'
+      card.querySelector('.rating').innerHTML = "⭐"+val.rating+"/5"
+    }
+    getfuncdata('card1', 'parking1');
+    getfuncdata('card2', 'parking2');
+    getfuncdata('card3', 'parking3');
+    getfuncdata('card4', 'parking4');
+    getfuncdata('card5', 'parking5');
+    
+    //search bar that AI wrote
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.info-card');
+
+    searchInput.addEventListener('input', function () {
+      const keyword = this.value.toLowerCase();
+
+      cards.forEach(card => {
+        const name = card.querySelector('.name').textContent.toLowerCase();
+        if (name.includes(keyword)) {
+          card.style.display = 'flex'; // or 'block' if using block layout
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+  //drag function that AI wrote
+  dragElement(document.getElementById("swipe-bar"));
+
+  function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    const bottomPanel = document.querySelector('.bottom-panel');
+    const initialPanelHeight = bottomPanel.offsetHeight;
+    const minHeight = 100; // Minimum height for the panel
+    const maxHeight = window.innerHeight * 0.8; // Maximum height (80% of viewport)
+    
+    if (document.getElementById(elmnt.id + "header")) {
+      /* if present, the header is where you move the DIV from:*/
+      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    } else {
+      /* otherwise, move the DIV from anywhere inside the DIV:*/
+      elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos2 = pos4 - e.clientY;
+      pos4 = e.clientY;
+      
+      // Calculate new height for the bottom panel
+      let newHeight = bottomPanel.offsetHeight + pos2;
+      
+      // Apply constraints to keep the panel usable
+      if (newHeight < minHeight) newHeight = minHeight;
+      if (newHeight > maxHeight) newHeight = maxHeight;
+      
+      // Apply the new height to the bottom panel
+      bottomPanel.style.height = newHeight + 'px';
+      
+      // Center the swipe bar horizontally
+      elmnt.style.left = '50%';
+      elmnt.style.transform = 'translateX(-50%)';
+    }
+
+    function closeDragElement() {
+      /* stop moving when mouse button is released:*/
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }}
+</script>
+</body>
+</html>
