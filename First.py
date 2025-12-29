@@ -1,6 +1,0 @@
-damage = input()
-health = input()
-lsthealth = list(health.spilt(' '))
-armor = input()
-lstarmor = list(armor.spilt(' '))
-print(lsthealth, lstarmor)
